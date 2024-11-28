@@ -1,101 +1,217 @@
+import HomeCarousel from "@/features/home/home-carousel";
 import Image from "next/image";
+import fashion_clothes from "@/assets/images/fashion_clothes.jpg";
+import macmini from "@/assets/images/macmini.png";
+import vacuum_cleaner from "@/assets/images/vacuum_cleaner.png";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
+  const categories = [
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Electronics",
+    },
+  ];
+  const products = [
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+    {
+      imageLink: "https://placehold.co/180x180",
+      name: "Iphone 16",
+      price: 1000,
+    },
+  ];
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <section className="w-full flex justify-center">
+        <HomeCarousel />
+      </section>
+      <section className="flex flex-row overflow-auto gap-x-4 px-8">
+        {categories.map((category, index) => (
+          <div
+            key={index}
+            className="w-full h-64 flex justify-center items-center"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="w-64 h-64 rounded-md flex flex-col justify-center items-center gap-y-4">
+              <Image
+                src={category.imageLink}
+                alt={category.name}
+                width={180}
+                height={180}
+                className="rounded-md"
+              />
+              <p className="font-bold text-base">{category.name}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+      <section className="mt-10 flex flex-row">
+        <Image src={fashion_clothes} alt="fashion clothes" width={600} />
+        <div className="flex flex-col justify-center items-center w-full">
+          <h1 className="text-5xl font-bold text-slate-700 text-center w-full">
+            Chic and Timeless
+            <br />
+            <span className="font-normal">Find Your Perfect Outfit!</span>
+          </h1>
+          <Button variant="outline" className="mt-8 w-40">
+            Explore
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+      <section className="flex flex-row w-full mt-10">
+        <div className="p-4 w-full">
+          <Card>
+            <CardHeader>
+              <CardTitle>New Arrival</CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-center items-center h-[400px]">
+              <Image src={macmini} alt="mac mini" width={600} />
+            </CardContent>
+            <CardFooter className="flex flex-col items-center justify-center gap-y-4">
+              <p className="text-3xl">See what's new here</p>
+              <Button variant="outline">Let's see now</Button>
+            </CardFooter>
+          </Card>
+        </div>
+        <div className="p-4 w-full ">
+          <Card>
+            <CardHeader>
+              <CardTitle>Top Choice</CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-center items-center h-[400px]">
+              <Image
+                src={vacuum_cleaner}
+                alt="mac mini"
+                width={350}
+                height={600}
+              />
+            </CardContent>
+            <CardFooter className="flex flex-col items-center justify-center gap-y-4">
+              <p className="text-3xl">See what's people choose</p>
+              <Button variant="outline">Let's see now</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </section>
+      <section className="p-6">
+        <h3 className="font-bold text-xl mb-4">Top products</h3>
+        <div className="grid grid-cols-6 gap-x-6 gap-y-6">
+          {products.map((product, index) => (
+            <Card key={index} className="">
+              <Image
+                src={product.imageLink}
+                alt={product.name}
+                width={180}
+                height={180}
+                className="rounded-md w-full"
+              />
+              <p className="text-xl ml-4 mt-1">{product.name}</p>
+              <div className="mt-2 p-4">
+                <p>{product.price}$</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+      <div className="mb-4 flex justify-center items-center">
+        <Button variant="outline" className="w-48 mx-auto mt-4">
+          Explore more
+          <ArrowRight size={20} className="text-slate-700" />
+        </Button>
+      </div>
     </div>
   );
 }
