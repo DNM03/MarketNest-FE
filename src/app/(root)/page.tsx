@@ -206,7 +206,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <div className="mb-4 flex justify-center items-center">
+      <div className="mb-20 flex justify-center items-center">
         <Button variant="outline" className="w-48 mx-auto mt-4">
           Explore more
           <ArrowRight size={20} className="text-slate-700" />
