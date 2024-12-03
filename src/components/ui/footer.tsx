@@ -11,50 +11,49 @@ function Footer() {
       <div className="flex flex-row ">
         <div className="flex flex-col w-full">
           <h4 className="font-bold text-lg mb-2">Company</h4>
-          <Link href="#" className="hover:font-bold opacity-60">
-            About Us{" "}
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
+            About Us
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Our Services
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Privacy Policy
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Affiliate Program
           </Link>
         </div>
         <div className="flex flex-col w-full">
           <h4 className="font-bold text-lg mb-2">Get Help</h4>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             FAQ
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Shipping
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Returns
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Order Status
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Payment Options
           </Link>
         </div>
         <div className="flex flex-col w-full">
           <h4 className="font-bold text-lg mb-2">Online Shop</h4>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Watch
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Shoes
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Phone
           </Link>
-          <Link href="#" className="hover:font-bold opacity-60">
+          <Link href="#" className="hover:font-bold opacity-60 w-fit">
             Equipments
           </Link>
         </div>
