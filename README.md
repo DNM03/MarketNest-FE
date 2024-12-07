@@ -1,3 +1,5 @@
+[![CI](https://github.com/DNM03/MarketNest-FE/actions/workflows/ci.yaml/badge.svg)](https://github.com/DNM03/MarketNest-FE/actions/workflows/ci.yaml)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
