@@ -161,8 +161,8 @@ export default function Home() {
               <Image src={macmini} alt="mac mini" width={600} />
             </CardContent>
             <CardFooter className="flex flex-col items-center justify-center gap-y-4">
-              <p className="text-3xl">See what's new here</p>
-              <Button variant="outline">Let's see now</Button>
+              <p className="text-3xl">{"See what's new here"}</p>
+              <Button variant="outline">{"Let's see now"}</Button>
             </CardFooter>
           </Card>
         </div>
@@ -180,8 +180,8 @@ export default function Home() {
               />
             </CardContent>
             <CardFooter className="flex flex-col items-center justify-center gap-y-4">
-              <p className="text-3xl">See what's people choose</p>
-              <Button variant="outline">Let's see now</Button>
+              <p className="text-3xl">{"See what's people choose"}</p>
+              <Button variant="outline">{"Let's see now"}</Button>
             </CardFooter>
           </Card>
         </div>

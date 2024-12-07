@@ -18,7 +18,6 @@ import QuantityInput from "@/components/ui/quantity-input";
 
 function Page() {
   const [hovering, setHovering] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(0);
   const images = [
     "https://placehold.co/100x100",
     "https://placehold.co/100x100",

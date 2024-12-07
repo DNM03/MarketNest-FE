@@ -51,7 +51,7 @@ function Page() {
             Login
           </Button>
           <div className="text-sm">
-            Don't have an account?{" "}
+            {"Don't have an account? "}
             <Link
               href="/register"
               className="text-slate-900 font-bold  relative group"
