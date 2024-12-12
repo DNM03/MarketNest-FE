@@ -8,8 +8,25 @@ const nextConfig = {
         protocol: "https",
         hostname: "placehold.co",
         port: "",
-        pathname: "/*",
-        search: "",
+        pathname: "**", // Matches all paths
+      },
+      {
+        protocol: "https",
+        hostname: "images.everydayhealth.com",
+        port: "",
+        pathname: "**", // Matches all paths
+      },
+      {
+        protocol: "https",
+        hostname: "encrypted-tbn0.gstatic.com",
+        port: "",
+        pathname: "**", // Matches all paths
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "**", // Matches all paths
       },
     ],
   },

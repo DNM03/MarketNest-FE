@@ -9,12 +9,30 @@ import { Button } from "./button";
 import { Input } from "./input";
 import { ChevronDown, Search } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import { getAllCategories } from "@/services/categoty";
 
 function Header() {
+  const { isAuthenticated, logout } = useAuth();
   const [showCategories, setShowCategories] = useState(false);
+  const [categories, setCategories] = useState([]);
+
   const dropdownRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        console.log(response.data.productCategories);
+        setCategories(response.data.productCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+
     function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
@@ -27,18 +45,26 @@ function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  const categories = [
-    "Electronics",
-    "Clothing",
-    "Home & Garden",
-    "Books",
-    "Sports",
-  ];
+
   return (
     <header className=" p-2 py-4 flex flex-row justify-between items-center sticky top-0 bg-slate-100 bg-opacity-50 backdrop-blur-md z-40">
       <div className="flex flex-row items-center">
-        <Image src={logo_icon} width={40} height={40} alt="Logo icon" />
-        <Image src={logo_text} width={140} height={50} alt="Logo text" />
+        <Image
+          src={logo_icon}
+          width={40}
+          height={40}
+          alt="Logo icon"
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
+        />
+        <Image
+          src={logo_text}
+          width={140}
+          height={50}
+          alt="Logo text"
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
+        />
         <nav>
           <ul className="font-bold flex flex-row items-center ml-12 gap-x-12 text-slate-700  cursor-default">
             <li>
@@ -64,15 +90,15 @@ function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-8 left-0 bg-white rounded-lg shadow-sm py-2 min-w-[200px]"
+                    className="absolute top-8 left-0 bg-white rounded-lg shadow-sm py-2 min-w-[700px] overflow-y-auto z-50 grid grid-cols-4 gap-x-4 gap-y-2"
                   >
-                    {categories.map((category) => (
+                    {categories.map((category: any) => (
                       <Link
-                        key={category}
+                        key={category.id}
                         href={`#`}
                         className="block px-4 py-2 hover:bg-slate-100 text-slate-700"
                       >
-                        {category}
+                        {category.name}
                       </Link>
                     ))}
                   </motion.div>
@@ -104,14 +130,18 @@ function Header() {
           />
           <Input placeholder="Search..." className="pl-8" />
         </div>
-        <Link href="/register">
-          <Button variant="ghost" className="w-24">
-            Register
-          </Button>
-        </Link>
-        <Link href="/login">
-          <Button className="bg-slate-700 text-slate-200 w-24">Login</Button>
-        </Link>
+        {!isAuthenticated && (
+          <Link href="/register">
+            <Button variant="ghost" className="w-24">
+              Register
+            </Button>
+          </Link>
+        )}
+        {!isAuthenticated && (
+          <Link href="/login">
+            <Button className="bg-slate-700 text-slate-200 w-24">Login</Button>
+          </Link>
+        )}
       </div>
     </header>
   );

@@ -29,10 +29,7 @@ privateApi.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        const response = await axios.post("/api/auth/refresh", {
-          refreshToken,
-        });
+        const response = await axios.post("/refresh");
 
         const { accessToken } = response.data;
         localStorage.setItem("accessToken", accessToken);
@@ -41,7 +38,6 @@ privateApi.interceptors.response.use(
         return privateApi(originalRequest);
       } catch (err) {
         localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
         window.location.href = "/login";
         return Promise.reject(err);
       }
@@ -53,21 +49,18 @@ privateApi.interceptors.response.use(
 
 export const authService = {
   async login(email: string, password: string) {
-    const response = await publicApi.post("/api/auth/login", {
+    const response = await publicApi.post("/login", {
       email: email,
       password: password,
     });
-    const { accessToken, refreshToken } = response.data;
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("accessToken", response.data.session.accessToken);
     return response.data;
   },
   async logout() {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
   },
   async register(email: string, password: string) {
-    const response = await publicApi.post("/api/auth/register", {
+    const response = await publicApi.post("/register", {
       email: email,
       password: password,
     });

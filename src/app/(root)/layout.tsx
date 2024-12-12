@@ -4,6 +4,7 @@ import "../globals.css";
 import Header from "@/components/ui/header";
 import { ReactLenis } from "@/utils/lenis";
 import Footer from "@/components/ui/footer";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -28,15 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ReactLenis root>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Header />
-          {children}
-          <Footer />
-        </body>
-      </ReactLenis>
+      <AuthProvider>
+        <ReactLenis root>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <Header />
+            {children}
+            <Footer />
+          </body>
+        </ReactLenis>
+      </AuthProvider>
     </html>
   );
 }

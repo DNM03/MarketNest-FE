@@ -31,13 +31,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = (tokens: AuthTokens) => {
     localStorage.setItem("accessToken", tokens.accessToken);
-    localStorage.setItem("refreshToken", tokens.refreshToken);
     setAccessToken(tokens.accessToken);
   };
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
     setAccessToken(null);
     router.push("/login");
   };
