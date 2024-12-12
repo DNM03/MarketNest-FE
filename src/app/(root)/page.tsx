@@ -1,3 +1,5 @@
+"use client";
+
 import HomeCarousel from "@/features/home/home-carousel";
 import Image from "next/image";
 import fashion_clothes from "@/assets/images/fashion_clothes.jpg";
@@ -12,122 +14,51 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getAllProducts } from "@/services/product";
+import { getAllCategories } from "@/services/categoty";
 
 export default function Home() {
-  const categories = [
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Electronics",
-    },
-  ];
-  const products = [
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-    {
-      imageLink: "https://placehold.co/180x180",
-      name: "Iphone 16",
-      price: 1000,
-    },
-  ];
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getAllProducts({
+          pageSize: "12",
+          pageIndex: "1",
+        });
+        setProducts(response.data.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        console.log(response.data.productCategories);
+        setCategories(response.data.productCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchProducts();
+    fetchCategories();
+  }, []);
   return (
     <div>
       <section className="w-full flex justify-center">
         <HomeCarousel />
       </section>
       <section className="flex flex-row overflow-auto gap-x-4 px-8">
-        {categories.map((category, index) => (
+        {categories.map((category: any, index) => (
           <div
             key={index}
             className="w-full h-64 flex justify-center items-center"
           >
             <div className="w-64 h-64 rounded-md flex flex-col justify-center items-center gap-y-4">
               <Image
-                src={category.imageLink}
+                src={category.image || "https://placehold.co/180x180"}
                 alt={category.name}
                 width={180}
                 height={180}
@@ -189,18 +120,22 @@ export default function Home() {
       <section className="p-6">
         <h3 className="font-bold text-xl mb-4">Top products</h3>
         <div className="grid grid-cols-6 gap-x-6 gap-y-6">
-          {products.map((product, index) => (
-            <Card key={index} className="">
-              <Image
-                src={product.imageLink}
-                alt={product.name}
-                width={180}
-                height={180}
-                className="rounded-md w-full"
-              />
-              <p className="text-xl ml-4 mt-1">{product.name}</p>
-              <div className="mt-2 p-4">
-                <p>{product.price}$</p>
+          {products.map((product: any, index) => (
+            <Card key={index} className="flex flex-col">
+              <div className="flex justify-center items-center w-full aspect-square">
+                <Image
+                  src={product.images[0] || "https://placehold.co/180x180"}
+                  alt={product.name}
+                  width={180}
+                  height={180}
+                  className="rounded-md w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col flex-1">
+                <p className="text-xl ml-4 mt-1">{product.name}</p>
+                <div className="mt-auto p-4">
+                  <p>{product.price}$</p>
+                </div>
               </div>
             </Card>
           ))}

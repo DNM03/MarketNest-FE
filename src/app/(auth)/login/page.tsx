@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import bg_image from "@/assets/images/background_image.png";
 import Image from "next/image";
@@ -7,25 +9,83 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import google_icon from "@/assets/images/google_icon.svg";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import {
+  loginDefaultValues,
+  loginSchema,
+  LoginValues,
+} from "@/lib/zod/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { authService } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema()),
+    defaultValues: loginDefaultValues,
+  });
+  const router = useRouter();
+
+  const onSubmit: SubmitHandler<LoginValues> = async (data: LoginValues) => {
+    console.log(data);
+    const response = await authService.login(data.email, data.password);
+    console.log(response);
+    if (response.status === 200) {
+      router.push("/");
+      reset();
+    }
+  };
   return (
     <div
       className="flex h-screen w-full items-center justify-center bg-slate-900 bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${bg_image.src})` }}
     >
       <div className="rounded-xl bg-slate-200 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
-        <form className="flex flex-col items-center text-slate-700 gap-y-4">
+        <form
+          className="flex flex-col items-center text-slate-700 gap-y-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Image src={app_logo} width={200} height={200} alt="App logo" />
           <h1 className="text-3xl font-bold">Login</h1>
-          <Input
-            placeholder="Enter username or email"
-            className="text-slate-900 focus:ring-slate-900 rounded-md min-w-72"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange } }) => (
+              <div className="flex flex-col gap-y-1 w-full">
+                <Input
+                  placeholder="Enter email"
+                  className="text-slate-900 focus:ring-slate-900 rounded-md min-w-72"
+                  value={value}
+                  onChange={onChange}
+                />
+                {errors.email && (
+                  <p className="text-red-500 ">{errors.email.message}</p>
+                )}
+              </div>
+            )}
           />
-          <Input
-            placeholder="Enter password"
-            type="password"
-            className="text-slate-900 focus:ring-slate-900 rounded-md"
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { value, onChange } }) => (
+              <div className="flex flex-col gap-y-1 w-full">
+                <Input
+                  placeholder="Enter password"
+                  type="password"
+                  className="text-slate-900 focus:ring-slate-900 rounded-md"
+                  value={value}
+                  onChange={onChange}
+                />
+                {errors.password && (
+                  <p className="text-red-500 ">{errors.password.message}</p>
+                )}
+              </div>
+            )}
           />
           <div className="flex flex-row items-center justify-between w-full">
             <div className="flex items-center space-x-2">
