@@ -21,9 +21,9 @@ function Page() {
             Our Story
           </h1>
           <p className="mt-6 text-xl text-slate-300 max-w-3xl">
-            Crafting exceptional shopping experiences since 2024. We're more
-            than just an e-commerce platform – we're your partner in discovering
-            quality products that enhance your lifestyle.
+            {
+              "Crafting exceptional shopping experiences since 2024. We're more than just an e-commerce platform – we're your partner in discovering quality products that enhance your lifestyle."
+            }
           </p>
         </div>
       </div>
@@ -33,10 +33,9 @@ function Page() {
           <div>
             <h2 className="text-3xl font-bold text-slate-900">Our Mission</h2>
             <p className="mt-4 text-lg text-slate-600">
-              We believe in making quality products accessible to everyone. Our
-              mission is to create a seamless shopping experience that connects
-              people with products they'll love, while maintaining the highest
-              standards of customer service and satisfaction.
+              {
+                "We believe in making quality products accessible to everyone. Our mission is to create a seamless shopping experience that connects people with products they'll love, while maintaining the highest standards of customer service and satisfaction."
+              }
             </p>
             <div className="mt-8">
               <h3 className="text-xl font-semibold text-slate-900">
