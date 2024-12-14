@@ -1,6 +1,12 @@
 import React from "react";
 
-function QuantityInput() {
+function QuantityInput({
+  value,
+  onChange,
+}: {
+  value?: number;
+  onChange?: (value: number) => void;
+}) {
   return (
     <div className="relative flex items-center max-w-[8rem]">
       <button
@@ -26,6 +32,8 @@ function QuantityInput() {
         </svg>
       </button>
       <input
+        value={value}
+        onChange={(e) => onChange?.(Number(e.target.value))}
         type="text"
         id="quantity-input"
         data-input-counter
