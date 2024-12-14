@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import bg_image from "@/assets/images/background_image.png";
 import Image from "next/image";
 import app_logo from "@/assets/images/marketnest_logo.png";
@@ -18,6 +18,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import LoadingOverlay from "@/components/ui/loading-overlay/loading-overlay";
 
 function Page() {
   const {
@@ -30,14 +31,21 @@ function Page() {
     defaultValues: loginDefaultValues,
   });
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginValues> = async (data: LoginValues) => {
-    console.log(data);
-    const response = await authService.login(data.email, data.password);
-    console.log(response);
-    if (response.status === 200) {
-      router.push("/");
-      reset();
+    setIsLoading(true);
+    try {
+      const response = await authService.login(data.email, data.password);
+      console.log(response);
+      if (response.status === 200) {
+        router.push("/");
+        reset();
+      }
+    } catch {
+      console.log("Error logging in");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -45,6 +53,7 @@ function Page() {
       className="flex h-screen w-full items-center justify-center bg-slate-900 bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${bg_image.src})` }}
     >
+      {isLoading && <LoadingOverlay />}
       <div className="rounded-xl bg-slate-200 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <form
           className="flex flex-col items-center text-slate-700 gap-y-4"

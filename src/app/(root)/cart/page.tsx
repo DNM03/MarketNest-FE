@@ -17,7 +17,7 @@ import Image from "next/image";
 import React, { Fragment } from "react";
 
 function Page() {
-  const [cart, setCart] = React.useState<any>({});
+  const [cart, setCart] = React.useState<any>([]);
   const [discount, setDiscount] = React.useState(0);
   React.useEffect(() => {
     const fetchCart = async () => {
@@ -34,7 +34,7 @@ function Page() {
 
   const calculateTotal = () => {
     let total = 0;
-    cart.cartDetails?.forEach((item: any) => {
+    cart?.forEach((item: any) => {
       total += item.product.price * item.quantity;
     });
     return total;
@@ -45,10 +45,8 @@ function Page() {
       <div>
         <h1 className="font-bold text-3xl">Shopping Cart</h1>
         <p>
-          <span className="font-semibold">
-            {cart.cartDetails?.length || 0} items
-          </span>{" "}
-          in your bag
+          <span className="font-semibold">{cart?.length || 0} items</span> in
+          your bag
         </p>
       </div>
       <div className="flex flex-row w-full mt-8 gap-x-4">
@@ -71,21 +69,26 @@ function Page() {
             </div>
           </div>
           <div className="grid grid-cols-7 gap-y-6">
-            {(cart.cartDetails || []).map((item: any) => (
+            {(cart?.length !== 0 ? cart : []).map((item: any) => (
               <Fragment key={item.id}>
                 <div className="col-span-3 flex flex-row gap-x-6">
-                  <Image
-                    src="https://placehold.co/120x160"
-                    alt="Product image"
-                    height={160}
-                    width={120}
-                    className="rounded-md"
-                  />
+                  <div className="flex justify-center items-center aspect-square ">
+                    <Image
+                      src={
+                        item.product.images[0]?.imageUrl ||
+                        "https://placehold.co/120x120"
+                      }
+                      alt="Product image"
+                      height={120}
+                      width={120}
+                      className="rounded-md h-full object-cover"
+                    />
+                  </div>
                   <div className=" flex flex-col justify-center">
                     <p className="font-semibold text-lg">
                       {item.product.name || ""}
                     </p>
-                    <p>Shop: shop</p>
+                    <p>Shop: {item.shop.name || ""}</p>
                   </div>
                 </div>
                 <div className="flex justify-center items-center">
@@ -122,8 +125,9 @@ function Page() {
           <hr />
           <h2 className="my-4 text-xl font-bold">Voucher Code</h2>
           <p className="mb-4">
-            Description: Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Sed ut turpis id diam venenatis maximus.
+            {
+              "Save big with our exclusive voucher code! Redeem now for amazing discounts."
+            }
           </p>
           <Input placeholder="Enter Voucher Code" />
           <Button className="w-full my-4">Appply</Button>

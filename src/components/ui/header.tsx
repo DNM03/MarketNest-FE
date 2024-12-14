@@ -35,11 +35,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
+import { getMe } from "@/services/user";
 
 function Header() {
   const { isAuthenticated, logout } = useAuth();
   const [showCategories, setShowCategories] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [user, setUser] = useState<any>({});
 
   const dropdownRef = useRef(null);
   const router = useRouter();
@@ -48,13 +50,21 @@ function Header() {
     const fetchCategories = async () => {
       try {
         const response = await getAllCategories();
-        console.log(response.data.productCategories);
         setCategories(response.data.productCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
     fetchCategories();
+    const fetchMe = async () => {
+      try {
+        const response = await getMe();
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchMe();
 
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -68,6 +78,23 @@ function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const getUserShortName = (name: string) => {
+    if (!name.trim()) {
+      return "";
+    }
+
+    const words = name.trim().split(/\s+/);
+
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    }
+
+    return words
+      .slice(0, 2)
+      .map((word) => word[0].toUpperCase())
+      .join("");
+  };
 
   return (
     <header className=" p-2 py-4 flex flex-row justify-between items-center sticky top-0 bg-slate-100 bg-opacity-50 backdrop-blur-md z-40">
@@ -199,7 +226,9 @@ function Header() {
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback>
+                    {getUserShortName(user.displayName || "")}
+                  </AvatarFallback>
                 </Avatar>
               </button>
             </DropdownMenuTrigger>
