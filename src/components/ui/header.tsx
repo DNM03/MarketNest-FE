@@ -7,11 +7,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./button";
 import { Input } from "./input";
-import { ChevronDown, Search } from "lucide-react";
+import {
+  Bell,
+  Bolt,
+  ChevronDown,
+  ClipboardType,
+  History,
+  LogOut,
+  MessageCircleMore,
+  PackageSearch,
+  Search,
+  ShoppingCart,
+  Store,
+  User,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { getAllCategories } from "@/services/categoty";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 function Header() {
   const { isAuthenticated, logout } = useAuth();
@@ -115,7 +138,14 @@ function Header() {
             <li>
               {" "}
               <Link href="/" className="relative group">
-                About Us
+                Orders
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </li>
+            <li>
+              {" "}
+              <Link href="/about-us" className="relative group">
+                About
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
@@ -141,6 +171,128 @@ function Header() {
           <Link href="/login">
             <Button className="bg-slate-700 text-slate-200 w-24">Login</Button>
           </Link>
+        )}
+        {isAuthenticated && (
+          <button onClick={() => router.push("/cart")}>
+            <ShoppingCart />
+          </button>
+        )}
+        {isAuthenticated && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <button className="flex justify-center ">
+                <Bell />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-64">
+              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+        {isAuthenticated && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <button>
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/setting"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <Bolt /> <span>Setting</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/cart"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <ShoppingCart /> <span>Cart</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/profile"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <PackageSearch /> <span>Order</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/profile"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <History /> <span>History</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/profile"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <ClipboardType /> <span>Feedback</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/profile"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <MessageCircleMore /> <span>Chat</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link
+                    href="/profile"
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
+                  >
+                    <Store /> <span>Register to sell</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <div
+                    onClick={() => {
+                      logout();
+                      router.push("/login");
+                    }}
+                    className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md "
+                  >
+                    <LogOut className="text-red-600" />{" "}
+                    <span className="text-red-600">Logout</span>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
     </header>

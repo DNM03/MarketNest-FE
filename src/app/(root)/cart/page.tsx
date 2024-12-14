@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,47 +11,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getCart } from "@/services/cart";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import React, { Fragment } from "react";
 
 function Page() {
-  const data = [
-    {
-      id: 1,
-      name: "Product 1",
-      price: 100,
-      quantity: 1,
-      total: 100,
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 200,
-      quantity: 1,
-      total: 200,
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 300,
-      quantity: 1,
-      total: 300,
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      price: 400,
-      quantity: 1,
-      total: 400,
-    },
-  ];
+  const [cart, setCart] = React.useState<any>({});
+  const [discount, setDiscount] = React.useState(0);
+  React.useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await getCart();
+        console.log("Cart:", response.data.cart);
+        setCart(response.data.cart);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
+    fetchCart();
+  }, []);
+
+  const calculateTotal = () => {
+    let total = 0;
+    cart.cartDetails?.forEach((item: any) => {
+      total += item.product.price * item.quantity;
+    });
+    return total;
+  };
+
   return (
     <div className="p-8">
       <div>
         <h1 className="font-bold text-3xl">Shopping Cart</h1>
         <p>
-          <span className="font-semibold">2 items</span> in your bag
+          <span className="font-semibold">
+            {cart.cartDetails?.length || 0} items
+          </span>{" "}
+          in your bag
         </p>
       </div>
       <div className="flex flex-row w-full mt-8 gap-x-4">
@@ -72,7 +71,7 @@ function Page() {
             </div>
           </div>
           <div className="grid grid-cols-7 gap-y-6">
-            {data.map((item) => (
+            {(cart.cartDetails || []).map((item: any) => (
               <Fragment key={item.id}>
                 <div className="col-span-3 flex flex-row gap-x-6">
                   <Image
@@ -83,19 +82,20 @@ function Page() {
                     className="rounded-md"
                   />
                   <div className=" flex flex-col justify-center">
-                    <p className="font-semibold text-lg">{item.name}</p>
-                    <p>Brand: brand</p>
+                    <p className="font-semibold text-lg">
+                      {item.product.name || ""}
+                    </p>
                     <p>Shop: shop</p>
                   </div>
                 </div>
                 <div className="flex justify-center items-center">
-                  <p>${item.price}</p>
+                  <p>${item.product.price || 0}</p>
                 </div>
                 <div className="flex justify-center items-center">
-                  <QuantityInput />
+                  <QuantityInput value={item.quantity || 0} />
                 </div>
                 <div className="flex justify-center items-center text-green-600 font-bold text-lg">
-                  <p>${item.total}</p>
+                  <p>${item.product.price * item.quantity || 0}</p>
                 </div>
                 <div className="flex justify-center items-center">
                   <button className="p-2 hover:bg-slate-200 rounded-full">
@@ -132,15 +132,15 @@ function Page() {
             <h2 className="text-xl font-bold mb-6">Cart Total</h2>
             <div className="flex flex-row justify-between">
               <p>Cart Subtotal</p>
-              <p>$1800</p>
+              <p>${calculateTotal() || 0}</p>
             </div>
             <div className="flex flex-row justify-between">
               <p>Discount</p>
-              <p className="text-white">-$100</p>
+              <p className="text-white">-${discount}</p>
             </div>
             <div className="flex flex-row justify-between font-bold text-lg">
               <p>Cart Total</p>
-              <p>$1700</p>
+              <p>${calculateTotal() - discount}</p>
             </div>
             <Button className="w-full mt-6" variant="outline">
               Proceed to Checkout
