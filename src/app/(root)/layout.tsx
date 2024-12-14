@@ -20,6 +20,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "MarketNest",
   description: "Your best e-commerce platform",
+  verification: {
+    google: "-swTdwnJnJrhFnCkZUlCgjAaunmhnw9bnb7P8yY_F1Q",
+  },
 };
 
 export default function RootLayout({
