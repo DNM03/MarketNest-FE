@@ -23,7 +23,6 @@ function Page() {
     const fetchCart = async () => {
       try {
         const response = await getCart();
-        console.log("Cart:", response.data.cart);
         setCart(response.data.cart);
       } catch (error) {
         console.error("Error fetching cart:", error);

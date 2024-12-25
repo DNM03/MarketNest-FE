@@ -1,4 +1,5 @@
 import { History, MapPinHouse, User } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 function Page() {
@@ -13,7 +14,10 @@ function Page() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="flex flex-col items-center p-6 bg-blue-50 rounded-lg shadow hover:shadow-lg transition">
+        <Link
+          className="flex flex-col items-center p-6 bg-blue-50 rounded-lg shadow hover:shadow-lg transition hover:cursor-pointer"
+          href={"/setting/personal-information"}
+        >
           <div className="w-16 h-16 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full mb-4">
             <User size={40} />
           </div>
@@ -23,9 +27,12 @@ function Page() {
           <p className="text-gray-500 text-sm text-center mt-2">
             Update your name, email, and password.
           </p>
-        </div>
+        </Link>
 
-        <div className="flex flex-col items-center p-6 bg-green-50 rounded-lg shadow hover:shadow-lg transition">
+        <Link
+          className="flex flex-col items-center p-6 bg-green-50 rounded-lg shadow hover:shadow-lg transition hover:cursor-pointer"
+          href={"/setting/addresses"}
+        >
           <div className="w-16 h-16 bg-green-100 text-green-600 flex items-center justify-center rounded-full mb-4">
             <MapPinHouse size={40} />
           </div>
@@ -33,9 +40,12 @@ function Page() {
           <p className="text-gray-500 text-sm text-center mt-2">
             Manage your saved addresses.
           </p>
-        </div>
+        </Link>
 
-        <div className="flex flex-col items-center p-6 bg-yellow-50 rounded-lg shadow hover:shadow-lg transition">
+        <Link
+          className="flex flex-col items-center p-6 bg-yellow-50 rounded-lg shadow hover:shadow-lg transition hover:cursor-pointer"
+          href={"/setting/history"}
+        >
           <div className="w-16 h-16 bg-yellow-100 text-yellow-600 flex items-center justify-center rounded-full mb-4">
             <History size={40} />
           </div>
@@ -43,7 +53,7 @@ function Page() {
           <p className="text-gray-500 text-sm text-center mt-2">
             Review your past orders and activities.
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

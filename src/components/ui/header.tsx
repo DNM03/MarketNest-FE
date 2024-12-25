@@ -164,7 +164,7 @@ function Header() {
             </li>
             <li>
               {" "}
-              <Link href="/" className="relative group">
+              <Link href="/order" className="relative group">
                 Orders
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
               </Link>
@@ -207,9 +207,9 @@ function Header() {
         {isAuthenticated && (
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <button className="flex justify-center ">
+              <div className="flex justify-center ">
                 <Bell />
-              </button>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-64">
               <DropdownMenuLabel>Notifications</DropdownMenuLabel>
@@ -220,7 +220,7 @@ function Header() {
         {isAuthenticated && (
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <button>
+              <div>
                 <Avatar>
                   <AvatarImage
                     src="https://github.com/shadcn.png"
@@ -230,7 +230,7 @@ function Header() {
                     {getUserShortName(user.displayName || "")}
                   </AvatarFallback>
                 </Avatar>
-              </button>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -288,7 +288,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/profile"
+                    href="/chat"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <MessageCircleMore /> <span>Chat</span>
