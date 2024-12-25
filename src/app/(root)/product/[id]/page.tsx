@@ -18,7 +18,6 @@ import QuantityInput from "@/components/ui/quantity-input";
 import { getProductById } from "@/services/product";
 
 function Page({ params }: { params: { id: string } }) {
-  console.log(params);
   const [hovering, setHovering] = useState(false);
   const [product, setProduct] = useState<any>({});
   const [selectedImage, setSelectedImage] = useState(0);

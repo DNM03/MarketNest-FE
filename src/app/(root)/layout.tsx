@@ -18,11 +18,15 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "MarketNest",
-  description: "Your best e-commerce platform",
+  title:
+    "MarketNest - The Ultimate E-Commerce Platform for Your Online Success",
+  description:
+    "Discover MarketNest, your premier e-commerce platform designed to elevate your online business. Experience seamless shopping, robust features, and exceptional support for your e-commerce needs.",
   verification: {
     google: "-swTdwnJnJrhFnCkZUlCgjAaunmhnw9bnb7P8yY_F1Q",
   },
+  keywords:
+    "e-commerce, online shopping, MarketNest, e-commerce platform, online business",
 };
 
 export default function RootLayout({
