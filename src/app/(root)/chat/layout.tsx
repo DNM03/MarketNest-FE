@@ -10,7 +10,7 @@ function Layout({
   return (
     <div className="p-4 flex flex-row gap-x-4">
       <LeftSection />
-      <Card className="w-full p-8">{children}</Card>
+      <Card className="w-full">{children}</Card>
     </div>
   );
 }

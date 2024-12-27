@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import Stepper from "@/components/ui/custom-stepper";
+import Footer from "@/components/ui/footer";
 import Address from "@/features/checkout/address";
 import Payment from "@/features/checkout/payment";
 import Summary from "@/features/checkout/summary";
@@ -15,18 +16,21 @@ function Page() {
   ];
   const [currentStep, setCurrentStep] = React.useState(0);
   return (
-    <div className="p-8">
-      <div>
-        <Stepper steps={steps} currentStep={currentStep} />
+    <>
+      <div className="p-8">
+        <div>
+          <Stepper steps={steps} currentStep={currentStep} />
+        </div>
+        <div className="flex flex-row w-full mt-8 px-12">
+          <Card className="p-6 w-full">
+            {currentStep === 0 && <Summary onClick={() => setCurrentStep(1)} />}
+            {currentStep === 1 && <Address onClick={() => setCurrentStep(2)} />}
+            {currentStep === 2 && <Payment />}
+          </Card>
+        </div>
       </div>
-      <div className="flex flex-row w-full mt-8 px-12">
-        <Card className="p-6 w-full">
-          {currentStep === 0 && <Summary onClick={() => setCurrentStep(1)} />}
-          {currentStep === 1 && <Address onClick={() => setCurrentStep(2)} />}
-          {currentStep === 2 && <Payment />}
-        </Card>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Footer from "@/components/ui/footer";
 import { Input } from "@/components/ui/input";
 import QuantityInput from "@/components/ui/quantity-input";
 import {
@@ -40,118 +41,121 @@ function Page() {
   };
 
   return (
-    <div className="p-8">
-      <div>
-        <h1 className="font-bold text-3xl">Shopping Cart</h1>
-        <p>
-          <span className="font-semibold">{cart?.length || 0} items</span> in
-          your bag
-        </p>
-      </div>
-      <div className="flex flex-row w-full mt-8 gap-x-4">
-        <Card className="p-6 w-full">
-          <div className="grid grid-cols-7 mb-8 text-lg font-bold">
-            <div className="col-span-3">
-              <p>Product</p>
-            </div>
-            <div className="flex justify-center">
-              <p>Price</p>
-            </div>
-            <div className="flex justify-center">
-              <p>Quantity</p>
-            </div>
-            <div className="flex justify-center">
-              <p>Total</p>
-            </div>
-            <div className="flex justify-center">
-              <p>Remove</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-7 gap-y-6">
-            {(cart?.length !== 0 ? cart : []).map((item: any) => (
-              <Fragment key={item.id}>
-                <div className="col-span-3 flex flex-row gap-x-6">
-                  <div className="flex justify-center items-center aspect-square ">
-                    <Image
-                      src={
-                        item.product.images[0]?.imageUrl ||
-                        "https://placehold.co/120x120"
-                      }
-                      alt="Product image"
-                      height={120}
-                      width={120}
-                      className="rounded-md h-full object-cover"
-                    />
-                  </div>
-                  <div className=" flex flex-col justify-center">
-                    <p className="font-semibold text-lg">
-                      {item.product.name || ""}
-                    </p>
-                    <p>Shop: {item.shop.name || ""}</p>
-                  </div>
-                </div>
-                <div className="flex justify-center items-center">
-                  <p>${item.product.price || 0}</p>
-                </div>
-                <div className="flex justify-center items-center">
-                  <QuantityInput value={item.quantity || 0} />
-                </div>
-                <div className="flex justify-center items-center text-green-600 font-bold text-lg">
-                  <p>${item.product.price * item.quantity || 0}</p>
-                </div>
-                <div className="flex justify-center items-center">
-                  <button className="p-2 hover:bg-slate-200 rounded-full">
-                    <Trash size={24} className="text-red-500 " />
-                  </button>
-                </div>
-              </Fragment>
-            ))}
-          </div>
-        </Card>
-        <Card className="w-1/3 p-4">
-          <h2 className="text-xl font-bold mb-4">Address</h2>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Choose Address" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button className="w-full my-4">Add address</Button>
-          <hr />
-          <h2 className="my-4 text-xl font-bold">Voucher Code</h2>
-          <p className="mb-4">
-            {
-              "Save big with our exclusive voucher code! Redeem now for amazing discounts."
-            }
+    <>
+      <div className="p-8">
+        <div>
+          <h1 className="font-bold text-3xl">Shopping Cart</h1>
+          <p>
+            <span className="font-semibold">{cart?.length || 0} items</span> in
+            your bag
           </p>
-          <Input placeholder="Enter Voucher Code" />
-          <Button className="w-full my-4">Appply</Button>
-          <hr />
-          <Card className="bg-orange-300 p-4 mt-4">
-            <h2 className="text-xl font-bold mb-6">Cart Total</h2>
-            <div className="flex flex-row justify-between">
-              <p>Cart Subtotal</p>
-              <p>${calculateTotal() || 0}</p>
+        </div>
+        <div className="flex flex-row w-full mt-8 gap-x-4">
+          <Card className="p-6 w-full">
+            <div className="grid grid-cols-7 mb-8 text-lg font-bold">
+              <div className="col-span-3">
+                <p>Product</p>
+              </div>
+              <div className="flex justify-center">
+                <p>Price</p>
+              </div>
+              <div className="flex justify-center">
+                <p>Quantity</p>
+              </div>
+              <div className="flex justify-center">
+                <p>Total</p>
+              </div>
+              <div className="flex justify-center">
+                <p>Remove</p>
+              </div>
             </div>
-            <div className="flex flex-row justify-between">
-              <p>Discount</p>
-              <p className="text-white">-${discount}</p>
+            <div className="grid grid-cols-7 gap-y-6">
+              {(cart?.length !== 0 ? cart : []).map((item: any) => (
+                <Fragment key={item.id}>
+                  <div className="col-span-3 flex flex-row gap-x-6">
+                    <div className="flex justify-center items-center aspect-square ">
+                      <Image
+                        src={
+                          item.product.images[0]?.imageUrl ||
+                          "https://placehold.co/120x120"
+                        }
+                        alt="Product image"
+                        height={120}
+                        width={120}
+                        className="rounded-md h-full object-cover"
+                      />
+                    </div>
+                    <div className=" flex flex-col justify-center">
+                      <p className="font-semibold text-lg">
+                        {item.product.name || ""}
+                      </p>
+                      <p>Shop: {item.shop.name || ""}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <p>${item.product.price || 0}</p>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <QuantityInput value={item.quantity || 0} />
+                  </div>
+                  <div className="flex justify-center items-center text-green-600 font-bold text-lg">
+                    <p>${item.product.price * item.quantity || 0}</p>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <button className="p-2 hover:bg-slate-200 rounded-full">
+                      <Trash size={24} className="text-red-500 " />
+                    </button>
+                  </div>
+                </Fragment>
+              ))}
             </div>
-            <div className="flex flex-row justify-between font-bold text-lg">
-              <p>Cart Total</p>
-              <p>${calculateTotal() - discount}</p>
-            </div>
-            <Button className="w-full mt-6" variant="outline">
-              Proceed to Checkout
-            </Button>
           </Card>
-        </Card>
+          <Card className="w-1/3 p-4">
+            <h2 className="text-xl font-bold mb-4">Address</h2>
+            <Select>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Choose Address" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">Light</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="system">System</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button className="w-full my-4">Add address</Button>
+            <hr />
+            <h2 className="my-4 text-xl font-bold">Voucher Code</h2>
+            <p className="mb-4">
+              {
+                "Save big with our exclusive voucher code! Redeem now for amazing discounts."
+              }
+            </p>
+            <Input placeholder="Enter Voucher Code" />
+            <Button className="w-full my-4">Appply</Button>
+            <hr />
+            <Card className="bg-orange-300 p-4 mt-4">
+              <h2 className="text-xl font-bold mb-6">Cart Total</h2>
+              <div className="flex flex-row justify-between">
+                <p>Cart Subtotal</p>
+                <p>${calculateTotal() || 0}</p>
+              </div>
+              <div className="flex flex-row justify-between">
+                <p>Discount</p>
+                <p className="text-white">-${discount}</p>
+              </div>
+              <div className="flex flex-row justify-between font-bold text-lg">
+                <p>Cart Total</p>
+                <p>${calculateTotal() - discount}</p>
+              </div>
+              <Button className="w-full mt-6" variant="outline">
+                Proceed to Checkout
+              </Button>
+            </Card>
+          </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

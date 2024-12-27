@@ -125,7 +125,7 @@ function Header() {
             </li>
             <li className="relative" ref={dropdownRef}>
               {" "}
-              <button
+              {/* <button
                 className="relative group flex flex-row items-center"
                 onClick={() => setShowCategories(!showCategories)}
               >
@@ -153,7 +153,11 @@ function Header() {
                     ))}
                   </motion.div>
                 )}
-              </AnimatePresence>
+              </AnimatePresence> */}
+              <Link href="/category" className="relative group">
+                Categories
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
             </li>
             <li>
               {" "}
@@ -258,7 +262,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/profile"
+                    href="/order"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <PackageSearch /> <span>Order</span>
@@ -268,7 +272,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/profile"
+                    href="/setting/history"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <History /> <span>History</span>
@@ -278,7 +282,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/profile"
+                    href="/order"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <ClipboardType /> <span>Feedback</span>

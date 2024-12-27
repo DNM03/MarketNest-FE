@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -10,26 +12,85 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getAllCategories } from "@/services/categoty";
+import { getAllProducts } from "@/services/product";
 import { Filter, Search, Star } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
-function LeftSection() {
+function LeftSection({ setProducts, setCurrentPage, setTotalPages }: any) {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const containerRef = useRef(null);
+  const [categories, setCategories] = React.useState([]);
+  const [selectedCategory, setSelectedCategory] = React.useState<
+    string | undefined
+  >(undefined);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !(containerRef.current as HTMLElement).contains(event.target as Node)
-      ) {
-        setSelectedRating(null);
+  const [search, setSearch] = React.useState("");
+  const [minPrice, setMinPrice] = React.useState("");
+  const [maxPrice, setMaxPrice] = React.useState("");
+  const [orderBy, setOrderBy] = React.useState("");
+  const [place, setPlace] = React.useState("");
+  const [isSortByPrice, setIsSortByPrice] = React.useState(false);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        setCategories(response.data.productCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      try {
+        const fetchProducts = async () => {
+          const response = await getAllProducts({
+            pageSize: "15",
+            pageIndex: "1",
+            ...(selectedCategory && { facet: selectedCategory }),
+            ...(search !== "" && { searchName: search }),
+            ...(minPrice !== "" && { minPrice }),
+            ...(maxPrice !== "" && { maxPrice }),
+            ...(orderBy !== "" && { orderBy }),
+            ...(selectedRating && { rating: selectedRating.toString() }),
+            ...(place !== "" && { place }),
+            ...(isSortByPrice && { sortBy: isSortByPrice }),
+          });
+          setProducts(response.data.products);
+          setTotalPages(response.data.totalPages);
+          setCurrentPage(1);
+        };
+        fetchProducts();
+      } catch (error) {
+        console.error("Error fetching products by category:", error);
+      }
+    }, 300);
+    return () => clearTimeout(debounceTimeout);
+  }, [
+    selectedCategory,
+    search,
+    minPrice,
+    maxPrice,
+    orderBy,
+    selectedRating,
+    place,
+    isSortByPrice,
+  ]);
+
+  const handleRemoveAllFilters = () => {
+    setSelectedCategory(undefined);
+    setSelectedRating(null);
+    setSearch("");
+    setMinPrice("");
+    setMaxPrice("");
+    setOrderBy("");
+    setPlace("");
+    setIsSortByPrice(false);
+  };
   return (
     <div className="flex flex-col gap-y-4 w-full px-8">
       <div className="flex flex-row items-center">
@@ -41,93 +102,109 @@ function LeftSection() {
           className="absolute top-1/2 left-2 transform -translate-y-1/2 text-slate-700"
           size={16}
         />
-        <Input placeholder="Search..." className="pl-8" />
+        <Input
+          placeholder="Search..."
+          className="pl-8"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
       <div>
         <h2 className="font-bold">Category</h2>
         <div className="p-2">
-          <Select>
+          <Select
+            value={selectedCategory ?? undefined}
+            onValueChange={setSelectedCategory}
+          >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Choose Category" />
+              {selectedCategory ? (
+                <SelectValue />
+              ) : (
+                <span className="text-slate-500">Choose Category</span>
+              )}
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+            <SelectContent onWheel={(e) => e.stopPropagation()}>
+              {categories.map((category: any, index) => (
+                <SelectItem key={index} value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
       </div>
       <div>
-        <h2 className="font-bold">Place</h2>
+        <h2 className="font-bold">Order By</h2>
         <div className="flex flex-col gap-y-2 p-2">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="hcm" />
-            <label
-              htmlFor="hcm"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              HCM City
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="hn" />
-            <label
-              htmlFor="hn"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Ha Noi
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="dn" />
-            <label
-              htmlFor="dn"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Da Nang City
-            </label>
-          </div>
+          <RadioGroup
+            defaultValue={orderBy}
+            value={orderBy}
+            onValueChange={setOrderBy}
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="asc" id="r1" />
+              <Label htmlFor="r1">ASC</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="desc" id="r2" />
+              <Label htmlFor="r2">DESC</Label>
+            </div>
+          </RadioGroup>
         </div>
       </div>
       <div>
-        <h2 className="font-bold">Shipping Type</h2>
+        <h2 className="font-bold">Place</h2>
         <div className="flex flex-col gap-y-2 p-2">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="standard" />
-            <label
-              htmlFor="standard"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Standard
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="Expedited" />
-            <label
-              htmlFor="Expedited"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Expedited
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="Same-Day" />
-            <label
-              htmlFor="Same-Day"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Same-Day
-            </label>
-          </div>
+          <RadioGroup
+            defaultValue={place}
+            value={place}
+            onValueChange={setPlace}
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="Ho Chi Minh" id="r1" />
+              <Label htmlFor="r1">HCM City</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="Ha Noi" id="r2" />
+              <Label htmlFor="r2">Ha Noi</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="Da Nang" id="r3" />
+              <Label htmlFor="r2">Da Nang</Label>
+            </div>
+          </RadioGroup>
         </div>
       </div>
       <div>
         <h2 className="font-bold">Price</h2>
         <div className="flex flex-row items-center p-2">
-          <Input placeholder="Start price" />
+          <Input
+            placeholder="Start price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
           <span className="mx-2">-</span>
-          <Input placeholder="End price" />
+          <Input
+            placeholder="End price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+        </div>
+      </div>
+      <div>
+        <h2 className="font-bold">Sort By Price</h2>
+        <div className="flex flex-row items-center p-2">
+          <Checkbox
+            id="sortBy"
+            checked={isSortByPrice}
+            onCheckedChange={(e) => setIsSortByPrice(e === true)}
+          />
+          <label
+            htmlFor="sortBy"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-4"
+          >
+            Sort by price
+          </label>
         </div>
       </div>
       <div ref={containerRef}>
@@ -135,7 +212,13 @@ function LeftSection() {
         {[5, 4, 3, 2, 1].map((rating) => (
           <button
             key={rating}
-            onClick={() => setSelectedRating(rating)}
+            onClick={() => {
+              if (rating === selectedRating) {
+                setSelectedRating(null);
+              } else {
+                setSelectedRating(rating);
+              }
+            }}
             className={`flex items-center w-full gap-2 p-2 rounded hover:bg-slate-100 ${
               selectedRating === rating ? "bg-slate-100" : ""
             }`}
@@ -156,7 +239,9 @@ function LeftSection() {
           </button>
         ))}
       </div>
-      <Button className="w-full">Remove All</Button>
+      <Button className="w-full" onClick={handleRemoveAllFilters}>
+        Remove All
+      </Button>
     </div>
   );
 }

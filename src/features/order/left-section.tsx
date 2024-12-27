@@ -23,7 +23,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/unverified" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/unverified")}
       >
         <BadgeMinus className="w-6 h-6" />
         <p>Unverified</p>
@@ -33,7 +33,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/pending-shipment" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/pending-shipment")}
       >
         <ClockArrowUp className="w-6 h-6" />
         <p>Pending Shipment</p>
@@ -43,7 +43,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/delivery" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/delivery")}
       >
         <Truck className="w-6 h-6" />
         <p>Delivery</p>
@@ -53,7 +53,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/completed" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/completed")}
       >
         <PackageCheck className="w-6 h-6" />
         <p>Completed</p>
@@ -63,7 +63,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/cancelled" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/cancelled")}
       >
         <CircleOff className="w-6 h-6" />
         <p>Cancelled</p>
@@ -73,7 +73,7 @@ function LeftSection() {
         style={{
           backgroundColor: path === "/order/returned" ? "#e2e8f0" : "",
         }}
-        onClick={() => router.push("#")}
+        onClick={() => router.push("/order/returned")}
       >
         <Undo2 className="w-6 h-6" />
         <p>Returned</p>

@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "../globals.css";
 import Header from "@/components/ui/header";
 import { ReactLenis } from "@/utils/lenis";
-import Footer from "@/components/ui/footer";
 import { AuthProvider } from "@/contexts/auth-context";
 
 const geistSans = localFont({
@@ -43,7 +42,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </body>
         </ReactLenis>
       </AuthProvider>

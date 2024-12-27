@@ -4,6 +4,7 @@ import workspace from "@/assets/images/workspace.jpeg";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Head from "next/head";
+import Footer from "@/components/ui/footer";
 
 function Page() {
   return (
@@ -108,17 +109,17 @@ function Page() {
               {[
                 {
                   name: "Mẫn Dương",
-                  role: "CEO & Founder",
+                  role: "Developer",
                   image: "https://github.com/shadcn.png",
                 },
                 {
                   name: "Tường Huỳnh",
-                  role: "Head of Operations",
+                  role: "Developer",
                   image: "https://github.com/shadcn.png",
                 },
                 {
                   name: "Khiêm Nguyễn",
-                  role: "Customer Experience Lead",
+                  role: "Developer",
                   image: "https://github.com/shadcn.png",
                 },
               ].map((member) => (
@@ -167,6 +168,7 @@ function Page() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

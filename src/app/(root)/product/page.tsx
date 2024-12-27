@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Head from "next/head";
+import Footer from "@/components/ui/footer";
 
 function Page() {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -48,7 +49,11 @@ function Page() {
       </Head>
       <div className="grid grid-cols-12">
         <div className="col-span-3 p-4 px-8 flex flex-row justify-between">
-          <LeftSection />
+          <LeftSection
+            setProducts={setProducts}
+            setCurrentPage={setCurrentPage}
+            setTotalPages={setTotalPages}
+          />
           <div className="border-l-2 h-full border-foreground opacity-10"></div>
         </div>
         <div className="col-span-9 p-4">
@@ -96,6 +101,7 @@ function Page() {
           />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
