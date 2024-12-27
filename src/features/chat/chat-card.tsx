@@ -6,13 +6,23 @@ function ChatCard({
   avatarUrl,
   name,
   message,
+  onClick,
+  isChatActive,
 }: {
   avatarUrl: string;
   name: string;
   message: string;
+  onClick: () => void;
+  isChatActive?: boolean;
 }) {
   return (
-    <Card className="w-full p-2 flex flex-row gap-x-4 items-center hover:cursor-pointer hover:bg-slate-50">
+    <Card
+      className="w-full p-2 flex flex-row gap-x-4 items-center hover:cursor-pointer hover:bg-slate-50"
+      onClick={onClick}
+      style={{
+        backgroundColor: isChatActive ? "#f1f5f9" : "",
+      }}
+    >
       <div>
         <Avatar>
           <AvatarImage

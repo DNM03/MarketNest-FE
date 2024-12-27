@@ -16,6 +16,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import QuantityInput from "@/components/ui/quantity-input";
 import { getProductById } from "@/services/product";
+import Footer from "@/components/ui/footer";
 
 function Page({ params }: { params: { id: string } }) {
   const [hovering, setHovering] = useState(false);
@@ -210,6 +211,7 @@ function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </Card>
+      <Footer />
     </>
   );
 }
