@@ -28,6 +28,12 @@ const nextConfig = {
         port: "",
         pathname: "**", // Matches all paths
       },
+      {
+        protocol: "https",
+        hostname: "*",
+        port: "",
+        pathname: "**", // Matches all paths
+      },
     ],
   },
 };

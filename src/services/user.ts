@@ -9,3 +9,23 @@ export const getMe = async () => {
     throw error;
   }
 };
+
+export const updateMe = async (data: any) => {
+  try {
+    const response = await privateApi.put("/me", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating user:", error);
+    throw error;
+  }
+};
+
+export const addAddress = async (data: any) => {
+  try {
+    const response = await privateApi.post("/addresses", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding address:", error);
+    throw error;
+  }
+};

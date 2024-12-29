@@ -21,10 +21,8 @@ import {
   Store,
   User,
 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
-import { getAllCategories } from "@/services/categoty";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import {
   DropdownMenu,
@@ -39,23 +37,21 @@ import { getMe } from "@/services/user";
 
 function Header() {
   const { isAuthenticated, logout } = useAuth();
-  const [showCategories, setShowCategories] = useState(false);
-  const [categories, setCategories] = useState([]);
+  // const [showCategories, setShowCategories] = useState(false);
+  // const [categories, setCategories] = useState([]);
   const [user, setUser] = useState<any>({});
+  const [search, setSearch] = useState("");
 
   const dropdownRef = useRef(null);
   const router = useRouter();
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      router.push(`/product?search=${search}`);
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await getAllCategories();
-        setCategories(response.data.productCategories);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
     const fetchMe = async () => {
       try {
         const response = await getMe();
@@ -65,18 +61,6 @@ function Header() {
       }
     };
     fetchMe();
-
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !(dropdownRef.current as HTMLElement).contains(event.target as Node)
-      ) {
-        setShowCategories(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const getUserShortName = (name: string) => {
@@ -125,35 +109,6 @@ function Header() {
             </li>
             <li className="relative" ref={dropdownRef}>
               {" "}
-              {/* <button
-                className="relative group flex flex-row items-center"
-                onClick={() => setShowCategories(!showCategories)}
-              >
-                Categories
-                <ChevronDown className="w-4 h-4 ml-2" />
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
-              </button>
-              <AnimatePresence>
-                {showCategories && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-8 left-0 bg-white rounded-lg shadow-sm py-2 min-w-[700px] overflow-y-auto z-50 grid grid-cols-4 gap-x-4 gap-y-2"
-                  >
-                    {categories.map((category: any) => (
-                      <Link
-                        key={category.id}
-                        href={`#`}
-                        className="block px-4 py-2 hover:bg-slate-100 text-slate-700"
-                      >
-                        {category.name}
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence> */}
               <Link href="/category" className="relative group">
                 Categories
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
@@ -163,13 +118,6 @@ function Header() {
               {" "}
               <Link href="/product" className="relative group">
                 Products
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-            <li>
-              {" "}
-              <Link href="/order" className="relative group">
-                Orders
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] rounded-full bg-slate-900 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
@@ -189,7 +137,13 @@ function Header() {
             className="absolute top-1/2 left-2 transform -translate-y-1/2 text-slate-700"
             size={16}
           />
-          <Input placeholder="Search..." className="pl-8" />
+          <Input
+            placeholder="Search..."
+            className="pl-8"
+            value={search}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
         {!isAuthenticated && (
           <Link href="/register">
@@ -282,7 +236,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/order"
+                    href="/feedback"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <ClipboardType /> <span>Feedback</span>

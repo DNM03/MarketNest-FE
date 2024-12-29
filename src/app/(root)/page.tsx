@@ -18,10 +18,12 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "@/services/product";
 import { getAllCategories } from "@/services/categoty";
 import Footer from "@/components/ui/footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const router = useRouter();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -51,11 +53,15 @@ export default function Home() {
         <section className="w-full flex justify-center">
           <HomeCarousel />
         </section>
-        <section className="flex flex-row overflow-auto gap-x-4 px-8">
+        <section
+          className="flex flex-row overflow-auto gap-x-4 px-8"
+          onWheel={(e) => e.stopPropagation()}
+        >
           {categories.map((category: any, index) => (
             <div
               key={index}
               className="w-full h-64 flex justify-center items-center"
+              onClick={() => router.push(`/product?category=${category.id}`)}
             >
               <div className="w-64 h-64 rounded-md flex flex-col justify-center items-center gap-y-4">
                 <Image
@@ -94,7 +100,12 @@ export default function Home() {
               </CardContent>
               <CardFooter className="flex flex-col items-center justify-center gap-y-4">
                 <p className="text-3xl">{"See what's new here"}</p>
-                <Button variant="outline">{"Let's see now"}</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => router.push("/product")}
+                >
+                  {"Let's see now"}
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -113,7 +124,12 @@ export default function Home() {
               </CardContent>
               <CardFooter className="flex flex-col items-center justify-center gap-y-4">
                 <p className="text-3xl">{"See what's people choose"}</p>
-                <Button variant="outline">{"Let's see now"}</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => router.push("/product")}
+                >
+                  {"Let's see now"}
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -122,7 +138,11 @@ export default function Home() {
           <h3 className="font-bold text-xl mb-4">Top products</h3>
           <div className="grid grid-cols-6 gap-x-6 gap-y-6">
             {products.map((product: any, index) => (
-              <Card key={index} className="flex flex-col">
+              <Card
+                key={index}
+                className="flex flex-col"
+                onClick={() => router.push(`/product/${product.id}`)}
+              >
                 <div className="flex justify-center items-center w-full aspect-square">
                   <Image
                     src={product.images[0] || "https://placehold.co/180x180"}
@@ -143,7 +163,11 @@ export default function Home() {
           </div>
         </section>
         <div className="mb-20 flex justify-center items-center">
-          <Button variant="outline" className="w-48 mx-auto mt-4">
+          <Button
+            variant="outline"
+            className="w-48 mx-auto mt-4"
+            onClick={() => router.push("/product")}
+          >
             Explore more
             <ArrowRight size={20} className="text-slate-700" />
           </Button>

@@ -24,8 +24,19 @@ function Page() {
         <div className="flex flex-row w-full mt-8 px-12">
           <Card className="p-6 w-full">
             {currentStep === 0 && <Summary onClick={() => setCurrentStep(1)} />}
-            {currentStep === 1 && <Address onClick={() => setCurrentStep(2)} />}
-            {currentStep === 2 && <Payment />}
+            {currentStep === 1 && (
+              <Address
+                onClick={() => setCurrentStep(2)}
+                onBack={() => setCurrentStep(0)}
+              />
+            )}
+            {currentStep === 2 && (
+              <Payment
+                onBack={() => {
+                  setCurrentStep(1);
+                }}
+              />
+            )}
           </Card>
         </div>
       </div>

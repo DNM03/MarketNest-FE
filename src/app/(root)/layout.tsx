@@ -4,6 +4,9 @@ import "../globals.css";
 import Header from "@/components/ui/header";
 import { ReactLenis } from "@/utils/lenis";
 import { AuthProvider } from "@/contexts/auth-context";
+import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
+import LoadingOverlay from "@/components/ui/loading-overlay/loading-overlay";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -41,8 +44,9 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
             <Header />
-            {children}
+            <Suspense fallback={<LoadingOverlay />}>{children}</Suspense>
             {/* <Footer /> */}
+            <Toaster />
           </body>
         </ReactLenis>
       </AuthProvider>
