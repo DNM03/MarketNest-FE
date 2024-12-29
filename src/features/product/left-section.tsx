@@ -15,17 +15,21 @@ import {
 import { getAllCategories } from "@/services/categoty";
 import { getAllProducts } from "@/services/product";
 import { Filter, Search, Star } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 function LeftSection({ setProducts, setCurrentPage, setTotalPages }: any) {
+  const searchParams = useSearchParams();
+  const searchParamCategopryValue = searchParams.get("category");
+  const searchParamSearchValue = searchParams.get("search");
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const containerRef = useRef(null);
   const [categories, setCategories] = React.useState([]);
   const [selectedCategory, setSelectedCategory] = React.useState<
     string | undefined
-  >(undefined);
+  >(searchParamCategopryValue || undefined);
 
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState(searchParamSearchValue || "");
   const [minPrice, setMinPrice] = React.useState("");
   const [maxPrice, setMaxPrice] = React.useState("");
   const [orderBy, setOrderBy] = React.useState("");
@@ -79,6 +83,8 @@ function LeftSection({ setProducts, setCurrentPage, setTotalPages }: any) {
     selectedRating,
     place,
     isSortByPrice,
+    searchParamCategopryValue,
+    searchParamSearchValue,
   ]);
 
   const handleRemoveAllFilters = () => {
@@ -131,6 +137,22 @@ function LeftSection({ setProducts, setCurrentPage, setTotalPages }: any) {
               ))}
             </SelectContent>
           </Select>
+        </div>
+      </div>
+      <div>
+        <h2 className="font-bold">Sort By Price</h2>
+        <div className="flex flex-row items-center p-2">
+          <Checkbox
+            id="sortBy"
+            checked={isSortByPrice}
+            onCheckedChange={(e) => setIsSortByPrice(e === true)}
+          />
+          <label
+            htmlFor="sortBy"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-4"
+          >
+            Sort by price
+          </label>
         </div>
       </div>
       <div>
@@ -191,22 +213,7 @@ function LeftSection({ setProducts, setCurrentPage, setTotalPages }: any) {
           />
         </div>
       </div>
-      <div>
-        <h2 className="font-bold">Sort By Price</h2>
-        <div className="flex flex-row items-center p-2">
-          <Checkbox
-            id="sortBy"
-            checked={isSortByPrice}
-            onCheckedChange={(e) => setIsSortByPrice(e === true)}
-          />
-          <label
-            htmlFor="sortBy"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-4"
-          >
-            Sort by price
-          </label>
-        </div>
-      </div>
+
       <div ref={containerRef}>
         <h2 className="font-bold">Rating</h2>
         {[5, 4, 3, 2, 1].map((rating) => (

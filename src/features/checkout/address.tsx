@@ -10,7 +10,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import React from "react";
 
-function Address({ onClick }: { onClick: () => void }) {
+function Address({
+  onClick,
+  onBack,
+}: {
+  onClick: () => void;
+  onBack: () => void;
+}) {
   return (
     <div>
       <h1 className="font-bold text-2xl mb-8">
@@ -68,8 +74,11 @@ function Address({ onClick }: { onClick: () => void }) {
           <p className="font-bold text-green-600">$1850</p>
         </div>
       </div>
-      <div className="flex justify-center">
-        <Button className="w-1/3 mt-8" onClick={onClick}>
+      <div className="flex justify-center items-center mt-4 gap-x-4">
+        <Button variant="outline" onClick={onBack} className="px-24">
+          Go Back
+        </Button>
+        <Button className="px-24" onClick={onClick}>
           Proceed to Payment
         </Button>
       </div>

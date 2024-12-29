@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 function QuantityInput({
@@ -7,9 +9,16 @@ function QuantityInput({
   value?: number;
   onChange?: (value: number) => void;
 }) {
+  const [quantity, setQuantity] = React.useState(value);
   return (
     <div className="relative flex items-center max-w-[8rem]">
       <button
+        onClick={() => {
+          setQuantity((prev = 0) => Math.max(0, prev - 1));
+          if (quantity !== undefined) {
+            onChange?.(quantity - 1);
+          }
+        }}
         type="button"
         id="decrement-button"
         data-input-counter-decrement="quantity-input"
@@ -32,8 +41,11 @@ function QuantityInput({
         </svg>
       </button>
       <input
-        value={value}
-        onChange={(e) => onChange?.(Number(e.target.value))}
+        value={quantity}
+        onChange={(e) => {
+          setQuantity(Number(e.target.value));
+          onChange?.(Number(e.target.value));
+        }}
         type="text"
         id="quantity-input"
         data-input-counter
@@ -43,6 +55,12 @@ function QuantityInput({
         required
       />
       <button
+        onClick={() => {
+          setQuantity((prev = 0) => Math.max(0, prev + 1));
+          if (quantity !== undefined) {
+            onChange?.(quantity + 1);
+          }
+        }}
         type="button"
         id="increment-button"
         data-input-counter-increment="quantity-input"

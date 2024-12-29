@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Head from "next/head";
 import Footer from "@/components/ui/footer";
+import { addToCart } from "@/services/cart";
+import { useToast } from "@/hooks/use-toast";
 
 function Page() {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -18,6 +20,7 @@ function Page() {
 
   const [totalPages, setTotalPages] = React.useState(0);
   const router = useRouter();
+  const { toast } = useToast();
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -34,6 +37,18 @@ function Page() {
     };
     fetchProducts();
   }, [currentPage]);
+
+  const handleAddToCart = async (productId: string) => {
+    try {
+      await addToCart({ productId: productId, quantity: 1 });
+      toast({
+        title: "Product added to cart",
+        variant: "success",
+      });
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
   return (
     <>
       <Head>
@@ -86,7 +101,13 @@ function Page() {
                         color="#ebc934"
                       />
                     </p>
-                    <div className=" hover:bg-slate-200 flex justify-between items-center p-2 rounded-full">
+                    <div
+                      className=" hover:bg-slate-200 flex justify-between items-center p-2 rounded-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(product.id);
+                      }}
+                    >
                       <ShoppingCart size={16} />
                     </div>
                   </div>

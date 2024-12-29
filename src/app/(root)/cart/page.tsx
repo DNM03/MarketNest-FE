@@ -12,25 +12,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getCart } from "@/services/cart";
+import { useToast } from "@/hooks/use-toast";
+import { clearOne, getCart, updateQuantity } from "@/services/cart";
 import { Trash } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 
 function Page() {
   const [cart, setCart] = React.useState<any>([]);
   const [discount, setDiscount] = React.useState(0);
+  const { toast } = useToast();
+  const router = useRouter();
+  const [refetch, setRefetch] = React.useState(false);
   React.useEffect(() => {
     const fetchCart = async () => {
       try {
         const response = await getCart();
         setCart(response.data.cart);
+        setRefetch(false);
       } catch (error) {
         console.error("Error fetching cart:", error);
       }
     };
     fetchCart();
-  }, []);
+  }, [refetch]);
 
   const calculateTotal = () => {
     let total = 0;
@@ -38,6 +44,29 @@ function Page() {
       total += item.product.price * item.quantity;
     });
     return total;
+  };
+
+  const handleUpdateQuantity = async (productId: string, quantity: number) => {
+    try {
+      await updateQuantity({ productId, quantity });
+
+      setRefetch(true);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
+  const handleClearOne = async (productId: string) => {
+    try {
+      await clearOne(productId);
+      toast({
+        title: "Clear successful",
+        variant: "success",
+      });
+      setRefetch(true);
+    } catch (error) {
+      console.error("Error clearing one:", error);
+    }
   };
 
   return (
@@ -72,7 +101,10 @@ function Page() {
             <div className="grid grid-cols-7 gap-y-6">
               {(cart?.length !== 0 ? cart : []).map((item: any) => (
                 <Fragment key={item.id}>
-                  <div className="col-span-3 flex flex-row gap-x-6">
+                  <div
+                    className="col-span-3 flex flex-row gap-x-6 hover:cursor-pointer"
+                    onClick={() => router.push(`/product/${item.product.id}`)}
+                  >
                     <div className="flex justify-center items-center aspect-square ">
                       <Image
                         src={
@@ -96,13 +128,22 @@ function Page() {
                     <p>${item.product.price || 0}</p>
                   </div>
                   <div className="flex justify-center items-center">
-                    <QuantityInput value={item.quantity || 0} />
+                    <QuantityInput
+                      value={item.quantity || 0}
+                      onChange={(value) => {
+                        handleUpdateQuantity(item.product.id, value);
+                        setRefetch(true);
+                      }}
+                    />
                   </div>
                   <div className="flex justify-center items-center text-green-600 font-bold text-lg">
                     <p>${item.product.price * item.quantity || 0}</p>
                   </div>
                   <div className="flex justify-center items-center">
-                    <button className="p-2 hover:bg-slate-200 rounded-full">
+                    <button
+                      className="p-2 hover:bg-slate-200 rounded-full"
+                      onClick={() => handleClearOne(item.product.id)}
+                    >
                       <Trash size={24} className="text-red-500 " />
                     </button>
                   </div>
@@ -147,7 +188,11 @@ function Page() {
                 <p>Cart Total</p>
                 <p>${calculateTotal() - discount}</p>
               </div>
-              <Button className="w-full mt-6" variant="outline">
+              <Button
+                className="w-full mt-6"
+                variant="outline"
+                onClick={() => router.push("/checkout")}
+              >
                 Proceed to Checkout
               </Button>
             </Card>

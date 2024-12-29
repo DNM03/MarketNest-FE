@@ -12,7 +12,7 @@ type OrderStatus =
   | "cancelled"
   | "returned";
 
-function OrderCard({ status }: { status: OrderStatus }) {
+function OrderCard({ status }: { status?: OrderStatus }) {
   const buttons = {
     unverified: [
       {
@@ -81,15 +81,16 @@ function OrderCard({ status }: { status: OrderStatus }) {
           <p>Quantity: 2</p>
         </div>
         <div className="flex flex-col justify-center gap-y-4">
-          {buttons[status].map((button, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              className="flex flex-row justify-start gap-x-2"
-            >
-              {button.icon} {button.label}
-            </Button>
-          ))}
+          {status &&
+            buttons[status].map((button, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                className="flex flex-row justify-start gap-x-2"
+              >
+                {button.icon} {button.label}
+              </Button>
+            ))}
         </div>
       </div>
       <div className="flex justify-center items-center">
