@@ -59,3 +59,13 @@ export const clearOne = async (productId: string) => {
     throw error;
   }
 };
+
+export const clearAll = async () => {
+  try {
+    const response = await privateApi.put(`/carts/clear-all`);
+    return response.data;
+  } catch (error) {
+    console.error("Error clearing all:", error);
+    throw error;
+  }
+};
