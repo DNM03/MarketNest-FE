@@ -29,3 +29,33 @@ export const addAddress = async (data: any) => {
     throw error;
   }
 };
+
+export const deleteAddress = async (addressId: string) => {
+  try {
+    const response = await privateApi.delete(`/addresses/${addressId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    throw error;
+  }
+};
+
+export const updateAddress = async (addressId: string, data: any) => {
+  try {
+    const response = await privateApi.put(`/addresses/${addressId}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating address:", error);
+    throw error;
+  }
+};
+
+export const getMyOrders = async () => {
+  try {
+    const response = await privateApi.get("/users/orders");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};

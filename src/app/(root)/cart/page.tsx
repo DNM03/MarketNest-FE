@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { clearOne, getCart, updateQuantity } from "@/services/cart";
+import { getSystemDiscounts } from "@/services/discount";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -21,7 +22,10 @@ import React, { Fragment } from "react";
 
 function Page() {
   const [cart, setCart] = React.useState<any>([]);
-  const [discount, setDiscount] = React.useState(0);
+  const [systemDiscounts, setSystemDiscounts] = React.useState<any>([]);
+  const [discount, setDiscount] = React.useState<any>();
+
+  const [discountMoney, setDiscountMoney] = React.useState(0);
   const { toast } = useToast();
   const router = useRouter();
   const [refetch, setRefetch] = React.useState(false);
@@ -37,6 +41,18 @@ function Page() {
     };
     fetchCart();
   }, [refetch]);
+
+  React.useEffect(() => {
+    const fetchDiscounts = async () => {
+      try {
+        const response = await getSystemDiscounts();
+        setSystemDiscounts(response.data.discounts);
+      } catch (error) {
+        console.error("Error fetching discounts:", error);
+      }
+    };
+    fetchDiscounts();
+  }, []);
 
   const calculateTotal = () => {
     let total = 0;
@@ -67,6 +83,14 @@ function Page() {
     } catch (error) {
       console.error("Error clearing one:", error);
     }
+  };
+
+  const calculateDiscount = () => {
+    let dc = 0;
+    if (discount) {
+      dc = (calculateTotal() * (discount?.discountPercentage || 0)) / 100;
+    }
+    return dc;
   };
 
   return (
@@ -152,7 +176,7 @@ function Page() {
             </div>
           </Card>
           <Card className="w-1/3 p-4">
-            <h2 className="text-xl font-bold mb-4">Address</h2>
+            {/* <h2 className="text-xl font-bold mb-4">Address</h2>
             <Select>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Choose Address" />
@@ -162,17 +186,38 @@ function Page() {
                 <SelectItem value="dark">Dark</SelectItem>
                 <SelectItem value="system">System</SelectItem>
               </SelectContent>
-            </Select>
-            <Button className="w-full my-4">Add address</Button>
-            <hr />
+            </Select> */}
+            {/* <Button className="w-full my-4">Add address</Button> */}
+            {/* <hr /> */}
             <h2 className="my-4 text-xl font-bold">Voucher Code</h2>
             <p className="mb-4">
               {
                 "Save big with our exclusive voucher code! Redeem now for amazing discounts."
               }
             </p>
-            <Input placeholder="Enter Voucher Code" />
-            <Button className="w-full my-4">Appply</Button>
+            {/* <Input placeholder="Enter Voucher Code" /> */}
+            <Select
+              value={discount}
+              onValueChange={(value) => setDiscount(value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Choose Voucher" />
+              </SelectTrigger>
+              <SelectContent onWheel={(e) => e.stopPropagation()}>
+                {systemDiscounts.map((discount: any, index: number) => (
+                  <SelectItem key={index} value={discount}>
+                    {discount?.code} - {discount?.campaign} (
+                    {discount?.discountPercentage}%)
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              className="w-full my-4"
+              onClick={() => setDiscountMoney(calculateDiscount())}
+            >
+              Appply
+            </Button>
             <hr />
             <Card className="bg-orange-300 p-4 mt-4">
               <h2 className="text-xl font-bold mb-6">Cart Total</h2>
@@ -182,11 +227,11 @@ function Page() {
               </div>
               <div className="flex flex-row justify-between">
                 <p>Discount</p>
-                <p className="text-white">-${discount}</p>
+                <p className="text-white">-${discountMoney}</p>
               </div>
               <div className="flex flex-row justify-between font-bold text-lg">
                 <p>Cart Total</p>
-                <p>${calculateTotal() - discount}</p>
+                <p>${calculateTotal() - discountMoney}</p>
               </div>
               <Button
                 className="w-full mt-6"

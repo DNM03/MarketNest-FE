@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ShoppingCart, Star, Store, Undo2, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type OrderStatus =
@@ -12,7 +15,18 @@ type OrderStatus =
   | "cancelled"
   | "returned";
 
-function OrderCard({ status }: { status?: OrderStatus }) {
+function OrderCard({
+  status,
+  totalAmount,
+  productsTotal,
+  orderId,
+}: {
+  status?: OrderStatus;
+  totalAmount: number;
+  productsTotal: number;
+  orderId: string;
+}) {
+  const router = useRouter();
   const buttons = {
     unverified: [
       {
@@ -60,25 +74,15 @@ function OrderCard({ status }: { status?: OrderStatus }) {
   return (
     <Card className="p-4 ">
       <div className="flex flex-row justify-between">
-        <div className="flex flex-row items-center gap-x-4">
-          <Image
-            src="https://placehold.co/160x160"
-            alt="Product image"
-            height={160}
-            width={160}
-            className="rounded-md"
-          />
-          <div className=" flex flex-col justify-center">
-            <p className="font-semibold text-lg">Name</p>
-            <p>Brand: brand</p>
-            <p>Shop: shop</p>
-          </div>
-        </div>
         <div className="flex flex-col justify-center ">
           <p>
-            Total Price: <span className="text-2xl font-semibold">$1000</span>
+            Total Price:{" "}
+            <span className="text-2xl font-semibold">${totalAmount}</span>
           </p>
-          <p>Quantity: 2</p>
+          <p>
+            Shipping Fee: <span className="text-lg font-semibold">$10</span>
+          </p>
+          <p>Quantity: {productsTotal}</p>
         </div>
         <div className="flex flex-col justify-center gap-y-4">
           {status &&
@@ -94,7 +98,11 @@ function OrderCard({ status }: { status?: OrderStatus }) {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <Button variant="outline" className="w-36">
+        <Button
+          variant="outline"
+          className="w-36"
+          onClick={() => router.push(`/order/${orderId}`)}
+        >
           Detail <ArrowRight />
         </Button>
       </div>
