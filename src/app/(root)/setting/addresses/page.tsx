@@ -90,7 +90,7 @@ function Page() {
               <DialogTitle>Add Address</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className="flex flex-col gap-y-4">
                 <div className="w-full">
                   <Controller
                     control={control}
@@ -169,6 +169,9 @@ function Page() {
             fullName={data.fullName || ""}
             phoneNumber={data.phoneNumber || ""}
             address={data.street || ""}
+            id={data.id || ""}
+            setRefetch={setRefetch}
+            toast={toast}
           />
         ))}
       </div>
