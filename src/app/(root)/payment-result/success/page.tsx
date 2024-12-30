@@ -1,12 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { clearAll } from "@/services/cart";
 import { CircleCheckBig } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 function Page() {
   const router = useRouter();
+  useEffect(() => {
+    const clearCart = async () => {
+      try {
+        await clearAll();
+      } catch (error) {
+        console.error("Error clearing cart:", error);
+      }
+    };
+    clearCart();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] bg-gradient-to-br from-green-100 to-blue-100">
