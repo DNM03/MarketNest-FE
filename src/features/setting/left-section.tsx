@@ -52,7 +52,7 @@ function LeftSection() {
         <MapPinHouse className="w-6 h-6" />
         <p>Address</p>
       </button>
-      <button
+      {/* <button
         className="flex flex-row items-center gap-x-6 w-full hover:bg-slate-200 p-3 rounded-md px-5"
         style={{
           backgroundColor: path === "/setting/history" ? "#e2e8f0" : "",
@@ -61,7 +61,7 @@ function LeftSection() {
       >
         <History className="w-6 h-6" />
         <p>History</p>
-      </button>
+      </button> */}
     </Card>
   );
 }

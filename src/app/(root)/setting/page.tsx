@@ -13,7 +13,7 @@ function Page() {
         through different settings.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           className="flex flex-col items-center p-6 bg-blue-50 rounded-lg shadow hover:shadow-lg transition hover:cursor-pointer"
           href={"/setting/personal-information"}
@@ -42,7 +42,7 @@ function Page() {
           </p>
         </Link>
 
-        <Link
+        {/* <Link
           className="flex flex-col items-center p-6 bg-yellow-50 rounded-lg shadow hover:shadow-lg transition hover:cursor-pointer"
           href={"/setting/history"}
         >
@@ -53,7 +53,7 @@ function Page() {
           <p className="text-gray-500 text-sm text-center mt-2">
             Review your past orders and activities.
           </p>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -1,26 +1,87 @@
 [![CI](https://github.com/DNM03/MarketNest-FE/actions/workflows/ci.yaml/badge.svg)](https://github.com/DNM03/MarketNest-FE/actions/workflows/ci.yaml)
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MarketNest
 
-## Getting Started
+Welcome to MarketNest—your ultimate eCommerce companion!
 
-First, run the development server:
+MarketNest is designed to simplify your shopping experience, making it easy to discover, compare, and purchase products from a wide range of categories. Whether you're looking for the latest gadgets, trendy fashion, or home essentials, MarketNest brings everything you need right to your fingertips.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Key Features
+
+- User-Friendly Interface: Navigate effortlessly through a clean and intuitive design tailored for optimal user experience.
+- Secure Transactions: Shop with confidence knowing your payment information is protected by top-notch security measures.
+- Real-Time Updates: Stay informed with real-time notifications on order status, promotions, and new arrivals.
+- User Reviews and Ratings: Read honest reviews and ratings from other shoppers to make informed purchasing decisions.
+- Easy Returns and Exchanges: Enjoy hassle-free returns and exchanges with our straightforward policies, ensuring your satisfaction with every purchase.
+
+# Installation and Setup
+
+To get started with MarketNest using Next.js, follow these simple steps to install and set up the application on your local machine.
+
+## Prerequisites
+
+- Node.js: Ensure you have Node.js installed (version 14.x or higher). You can download it from [nodejs.org](https://nodejs.org/en).
+- Yarn: You should also have [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) installed for package management.
+
+## Step 1: Clone the Repository
+
+First, clone the MarketNest repository from GitHub:
+
+```C
+git clone https://github.com/DNM03/MarketNest-FE.git
 ```
 
-Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+## Step 2: Navigate to the Project Directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Change into the project directory:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```C
+cd MarketNest-FE
+```
+
+## Step 3: Install Dependencies
+
+Install the required dependencies using Yarn:
+
+```C
+yarn install
+```
+
+## Step 4: Configure Environment Variables
+
+Create a .env file in the root of your project to store your environment variables. Here’s an example configuration:
+
+```C
+BASE_URL=https://example.com
+```
+
+Please contact the owner to get access to the server.
+
+## Step 5: Run the Development Server
+
+Start the development server by running:
+
+```C
+yarn dev
+```
+
+You should see output indicating that your app is running, typically at http://localhost:5173.
+
+## Step 6: Access the Application
+
+Open your web browser and navigate to http://localhost:5173 to see MarketNest in action!
+
+## Step 7: Building for Production
+
+When you're ready to deploy your app, build it for production with:
+
+```C
+yarn build
+```
+
+## Conclusion
+
+You are now set up with MarketNest! Explore the codebase, customize features, and enjoy building your eCommerce platform. If you encounter any issues, please refer to the documentation or seek help from the community. Happy coding!
 
 ## Learn More
 

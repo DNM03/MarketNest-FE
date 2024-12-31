@@ -223,7 +223,7 @@ function Header() {
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
-              <DropdownMenuGroup>
+              {/* <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
                     href="/setting/history"
@@ -232,7 +232,7 @@ function Header() {
                     <History /> <span>History</span>
                   </Link>
                 </DropdownMenuItem>
-              </DropdownMenuGroup>
+              </DropdownMenuGroup> */}
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
@@ -256,7 +256,7 @@ function Header() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link
-                    href="/profile"
+                    href="/register-to-sell"
                     className="flex flex-row items-center gap-x-4 w-full hover:bg-slate-100 rounded-md"
                   >
                     <Store /> <span>Register to sell</span>
