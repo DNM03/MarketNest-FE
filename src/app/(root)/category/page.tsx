@@ -34,13 +34,15 @@ function Page() {
               className="w-full h-64 flex justify-center items-center hover:bg-slate-100 rounded-lg hover:scale-110 ease-in-out transition-transform duration-300"
             >
               <div className="w-64 h-64 rounded-md flex flex-col justify-center items-center gap-y-4">
-                <Image
-                  src={category.image || "https://placehold.co/180x180"}
-                  alt={category.name}
-                  width={180}
-                  height={180}
-                  className="rounded-md"
-                />
+                <div className="flex justify-center items-center w-[180px] h-[180px]">
+                  <Image
+                    src={category.image || "https://placehold.co/180x180"}
+                    alt={category.name}
+                    width={180}
+                    height={180}
+                    className="rounded-md w-full h-full object-cover"
+                  />
+                </div>
                 <p className="font-bold text-base">{category.name}</p>
               </div>
             </div>

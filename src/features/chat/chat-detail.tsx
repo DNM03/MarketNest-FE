@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { getChatDetail, sendMessage } from "@/services/chat";
 import { getMe } from "@/services/user";
+import Image from "next/image";
 
 interface Message {
   id: number;
@@ -25,6 +26,7 @@ const ChatDetail = () => {
       try {
         const response = await getChatDetail(roomId);
         setMessages(response.data.chatDetails);
+        console.log("Messages:", response.data.chatDetails);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -107,6 +109,14 @@ const ChatDetail = () => {
                   : "bg-white text-slate-800 rounded-bl-none"
               }`}
             >
+              {message.image && message.image !== "" && (
+                <Image
+                  src={message?.image || "https://placehold.co/160x160"}
+                  alt="message image"
+                  width={160}
+                  height={160}
+                />
+              )}
               <p className="mb-1">{message.message}</p>
               <p
                 className={`text-xs ${
