@@ -26,7 +26,6 @@ const ChatDetail = () => {
       try {
         const response = await getChatDetail(roomId);
         setMessages(response.data.chatDetails);
-        console.log("Messages:", response.data.chatDetails);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }

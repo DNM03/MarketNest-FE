@@ -29,6 +29,18 @@ const nextConfig = {
         pathname: "**", // Matches all paths
       },
       {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "**", // Matches all paths
+      },
+      {
+        protocol: "https",
+        hostname: "marketnest-api.onrender.com",
+        port: "",
+        pathname: "**", // Matches all paths
+      },
+      {
         protocol: "https",
         hostname: "*",
         port: "",
