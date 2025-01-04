@@ -59,3 +59,13 @@ export const getMyOrders = async () => {
     throw error;
   }
 };
+
+export const registerToSale = async (data: any) => {
+  try {
+    const response = await privateApi.post("/users/register-to-sell", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering to sale:", error);
+    throw error;
+  }
+};
