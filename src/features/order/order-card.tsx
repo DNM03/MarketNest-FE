@@ -20,11 +20,13 @@ function OrderCard({
   totalAmount,
   productsTotal,
   orderId,
+  discount,
 }: {
   status?: OrderStatus;
   totalAmount: number;
   productsTotal: number;
   orderId: string;
+  discount?: number;
 }) {
   const router = useRouter();
   const buttons = {
@@ -78,6 +80,12 @@ function OrderCard({
           <p>
             Total Price:{" "}
             <span className="text-2xl font-semibold">${totalAmount}</span>
+          </p>
+          <p>
+            Discount:{" "}
+            <span className="text-2xl font-semibold">
+              ${Math.round((totalAmount * (discount || 0)) / 100)}
+            </span>
           </p>
           <p>
             Shipping Fee: <span className="text-lg font-semibold">$10</span>

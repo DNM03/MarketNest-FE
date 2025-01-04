@@ -28,6 +28,7 @@ function Page() {
           key={index}
           status="returned"
           totalAmount={Math.round(order?.totalAmount) || 0}
+          discount={order?.discount?.discountPercentage || 0}
           productsTotal={
             order?.orderDetails?.reduce(
               (sum: number, product: any) => sum + (product.quantity || 0),
