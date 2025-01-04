@@ -58,7 +58,7 @@ function Payment({
       if (response) {
         const finalAmount =
           total * 25485 -
-          (total * 25485 * (discount?.discountRate || 0)) / 100 +
+          (total * 25485 * (discount?.discountPercentage || 0)) / 100 +
           10 * 25485;
         const responsePayment = await createPayment({
           orderId: response.data.id,
