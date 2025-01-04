@@ -263,7 +263,7 @@ function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
         <h4 className="my-4">Product Ratings:</h4>
-        <div>
+        <div className="flex flex-col gap-y-4">
           {ratings.map((rating: any, index: number) => (
             <div className="flex flex-row gap-x-4" key={index}>
               <Image
